@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/Bilal-Ahmeddev/Furniro-Shop.git"
+  "homepage": "https://github.com/Bilal-Ahmeddev/Furniro-Shop"
 ,
   "scripts": {
     "dev": "vite",

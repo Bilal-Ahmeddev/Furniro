@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, Heart } from 'lucide-react';
-import main from '../assets/main.jpg'
+import main from '../assets/main.jpg';
 import bedroom from '../assets/bedroom.jpg';
 import living from '../assets/living.jpg';
 import office from '../assets/office.jpg';
@@ -15,37 +15,32 @@ const products = [
     name: "Modern Leather Sofa",
     price: "$1,299",
     image: main,
-    category: "Living Room"
+    category: "Living Room",
   },
   {
     id: 2,
     name: "Rustic Dining Table",
     price: "$899",
     image: one,
-    category: "Dining Room"
+    category: "Dining Room",
   },
   {
     id: 3,
     name: "Minimalist Bed Frame",
     price: "$749",
     image: bed,
-    category: "Bedroom"
+    category: "Bedroom",
   },
   {
     id: 4,
     name: "Accent Armchair",
     price: "$499",
     image: chair,
-    category: "Chair"
-  }
+    category: "Chair",
+  },
 ];
 
-const categories = [
-  "Bedroom",
-  "Dining Room",
-  "Office",
-  "Outdoor"
-];
+const categories = ["Bedroom", "Dining Room", "Office", "Outdoor"];
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -63,18 +58,29 @@ const HomePage = () => {
     }
   }, [cart]);
 
+  // Auto-play functionality
+  useEffect(() => {
+    let interval;
+    if (isAutoPlaying) {
+      interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % products.length);
+      }, 5000); // Change slide every 5 seconds
+    }
+    return () => clearInterval(interval); // Cleanup interval on unmount or when auto-play is disabled
+  }, [isAutoPlaying, products.length]);
+
   const addToCart = (product) => {
     setCart([...cart, product]);
   };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % products.length);
-    setIsAutoPlaying(false);
+    setIsAutoPlaying(false); // Disable auto-play on manual interaction
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + products.length) % products.length);
-    setIsAutoPlaying(false);
+    setIsAutoPlaying(false); // Disable auto-play on manual interaction
   };
 
   return (
@@ -90,7 +96,10 @@ const HomePage = () => {
       <div className="relative z-10">
         {/* Hero Carousel */}
         <div className="relative h-screen overflow-hidden">
-          <div className="flex transition-transform duration-700 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+          <div
+            className="flex transition-transform duration-700 ease-in-out h-full"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          >
             {products.map((product) => (
               <div key={product.id} className="min-w-full relative">
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
@@ -110,11 +119,17 @@ const HomePage = () => {
             ))}
           </div>
 
-          <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full hover:bg-white transition-colors">
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full hover:bg-white transition-colors"
+          >
             <ChevronLeft className="h-6 w-6" />
           </button>
 
-          <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full hover:bg-white transition-colors">
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full hover:bg-white transition-colors"
+          >
             <ChevronRight className="h-6 w-6" />
           </button>
         </div>

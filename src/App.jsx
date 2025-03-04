@@ -10,7 +10,7 @@ import Cart from "./Pages/Cart";
 
 const App = () => {
   return (
-    <Router basename="">
+    <Router basename="/Furniro">
       <Navbar />
       <main>
         <Routes>
